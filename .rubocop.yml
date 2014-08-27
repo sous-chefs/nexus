@@ -1,0 +1,13 @@
+Style/FileName:
+  Exclude:
+    - 'Guardfile'
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%':  '()'
+    '%q': '()'
+    '%Q': '()'
+    '%w': '()'
+    '%W': '()'
+    '%x': '()'
