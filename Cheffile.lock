@@ -10,15 +10,21 @@ SITE
     build-essential (2.0.6)
     chef_handler (1.1.6)
     java (1.27.0)
-    runit (1.5.10)
-      build-essential (>= 0.0.0)
-      yum (~> 3.0)
-      yum-epel (>= 0.0.0)
     windows (1.34.2)
       chef_handler (>= 0.0.0)
     yum (3.2.4)
     yum-epel (0.4.0)
       yum (~> 3.0)
+
+GIT
+  remote: git://github.com/hw-cookbooks/runit.git
+  ref: master
+  sha: d54b9ade9311c3bdf242c9d6650b9fd761588247
+  specs:
+    runit (1.5.11)
+      build-essential (>= 0.0.0)
+      yum (~> 3.0)
+      yum-epel (>= 0.0.0)
 
 PATH
   remote: .
@@ -31,5 +37,6 @@ PATH
 DEPENDENCIES
   apt (>= 0)
   nexus (>= 0)
+  runit (>= 0)
   yum (>= 0)
 
