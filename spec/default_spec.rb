@@ -9,6 +9,10 @@ describe 'nexus::default' do
 
   nexus_home = '/usr/local/nexus'
 
+  it 'installs the nexus_cli gem' do
+    expect(chef_run).to install_chef_gem('nexus_cli')
+  end
+
   it 'creates nexus group' do
     expect(chef_run).to create_group('nexus').with(:system => true)
   end

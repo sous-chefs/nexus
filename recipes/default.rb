@@ -20,6 +20,10 @@ include_recipe 'ark'
 include_recipe 'java'
 include_recipe 'runit'
 
+chef_gem 'nexus_cli' do
+  version '4.1.0'
+end
+
 group node[:nexus][:group] do
   system true
 end
