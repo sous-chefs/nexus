@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe 'nexus::default' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) do
+    runner = ChefSpec::Runner.new
+    runner.node.set[:runit][:sv_bin] = '/usr/bin/sv'
+    runner.converge(described_recipe)
+  end
 
   nexus_home = '/usr/local/nexus'
 
@@ -15,14 +19,6 @@ describe 'nexus::default' do
       :gid => 'nexus',
       :shell => '/bin/bash',
       :home => nexus_home
-    )
-  end
-
-  it 'creates nexus home directory' do
-    expect(chef_run).to create_directory(nexus_home).with(
-      :user => 'nexus',
-      :group => 'nexus',
-      :mode => 0775
     )
   end
 
@@ -40,19 +36,6 @@ describe 'nexus::default' do
     )
   end
 
-  it 'creates nexus init script' do
-    expect(chef_run).to create_template(::File.join(nexus_home, 'bin', 'nexus')).with(
-      :user => 'nexus',
-      :group => 'nexus',
-      :mode => 0775
-    )
-  end
-
-  it 'links /etc/init.d/nexus to nexus init script' do
-    link = chef_run.link('/etc/init.d/nexus')
-    expect(link).to link_to(::File.join(nexus_home, 'bin', 'nexus'))
-  end
-
   it 'creates jetty.xml' do
     expect(chef_run).to create_template(::File.join(nexus_home, 'conf', 'jetty.xml')).with(
       :user => 'nexus',
@@ -61,9 +44,13 @@ describe 'nexus::default' do
     )
   end
 
+  it 'should include the runit cookbook' do
+    expect(chef_run).to include_recipe('runit')
+  end
+
   it 'enables and start nexus service' do
-    expect(chef_run).to enable_service('nexus')
-    expect(chef_run).to start_service('nexus')
+    expect(chef_run).to enable_runit_service('nexus')
+    expect(chef_run).to start_runit_service('nexus')
   end
 
 end
