@@ -16,6 +16,10 @@
 # limitations under the License.
 #
 
+include_recipe 'ark'
+include_recipe 'java'
+include_recipe 'runit'
+
 group node[:nexus][:group] do
   system true
 end
@@ -27,14 +31,24 @@ user node[:nexus][:user] do
   system true
 end
 
-directory node[:nexus][:home] do
+ark 'nexus' do
+  url 'http://www.sonatype.org/downloads/nexus-2.9.0-bundle.tar.gz'
+  version '2.9.0-04'
+  path node[:nexus][:home]
+  strip_components 1
+  checksum '0025c478a9ad4b3e0c8a31ebebe0001873a41a7716113a3802eef55ce516e19a'
   owner node[:nexus][:user]
-  group node[:nexus][:group]
-  recursive true
-  mode 0775
+  action :install
 end
 
-%w(bin conf logs pid tmp work).each do |dir|
+%w(
+  bin
+  conf
+  logs
+  pid
+  tmp
+  work
+).each do |dir|
   directory ::File.join(node[:nexus][:home], dir) do
     owner node[:nexus][:user]
     group node[:nexus][:group]
@@ -46,6 +60,12 @@ template ::File.join(node[:nexus][:home], 'conf', 'nexus.properties') do
   owner node[:nexus][:user]
   group node[:nexus][:group]
   mode 0775
+  variables(
+    :nexus_port => '8080',
+    :nexus_host => '0.0.0.0',
+    :nexus_context_path => '/nexus',
+    :work_dir => ::File.join(node[:nexus][:home], 'work')
+  )
 end
 
 template ::File.join(node[:nexus][:home], 'conf', 'jetty.xml') do
@@ -53,6 +73,7 @@ template ::File.join(node[:nexus][:home], 'conf', 'jetty.xml') do
   owner node[:nexus][:user]
   group node[:nexus][:group]
   mode 0775
+  variables(:loopback => true)
 end
 
 template ::File.join(node[:nexus][:home], 'bin', 'nexus') do
@@ -60,12 +81,16 @@ template ::File.join(node[:nexus][:home], 'bin', 'nexus') do
   owner node[:nexus][:user]
   group node[:nexus][:group]
   mode 0775
+  variables(
+    :nexus_user => node[:nexus][:user],
+    :nexus_pid => ::File.join(node[:nexus][:home], 'pid')
+  )
 end
 
-link '/etc/init.d/nexus' do
-  to ::File.join(node[:nexus][:home], 'bin', 'nexus')
-end
-
-service 'nexus' do
-  action [:enable, :start]
+runit_service 'nexus' do
+  action :enable
+  default_logger true
+  options(
+    :nexus_user => node[:nexus][:user]
+  )
 end
