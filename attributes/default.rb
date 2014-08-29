@@ -19,3 +19,5 @@
 default[:nexus][:user] = 'nexus'
 default[:nexus][:group] = 'nexus'
 default[:nexus][:home] = '/usr/local/nexus'
+
+default[:java][:jdk_version] = 7
