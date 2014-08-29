@@ -19,3 +19,5 @@
 site "http://community.opscode.com/api/v1"
 
 cookbook 'nexus', :path => '.'
+cookbook 'apt'
+cookbook 'yum'
