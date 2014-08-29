@@ -24,3 +24,7 @@ maintainer_email 'support@hw-ops.com'
 license 'Proprietary - All Rights Reserved'
 description 'installs and configures sonatype nexus'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+
+depends 'ark'
+depends 'java'
+depends 'runit'
