@@ -77,9 +77,9 @@ template ::File.join(node[:nexus][:home], 'conf', 'jetty.xml') do
 end
 
 runit_service 'nexus' do
-  action :enable
   default_logger true
   options(
     :nexus_user => node[:nexus][:user]
   )
+  action [:enable, :start]
 end
