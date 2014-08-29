@@ -65,9 +65,9 @@ template ::File.join(node[:nexus][:home], 'conf', 'nexus.properties') do
   group node[:nexus][:group]
   mode 0775
   variables(
-    :nexus_port => '8080',
+    :nexus_port => node[:nexus][:port],
     :nexus_host => '0.0.0.0',
-    :nexus_context_path => '/nexus',
+    :nexus_context_path => node[:nexus][:context_path],
     :work_dir => ::File.join(node[:nexus][:home], 'work')
   )
 end
@@ -77,7 +77,7 @@ template ::File.join(node[:nexus][:home], 'conf', 'jetty.xml') do
   owner node[:nexus][:user]
   group node[:nexus][:group]
   mode 0775
-  variables(:loopback => true)
+  variables(:loopback => node[:nexus][:loopback_only])
 end
 
 runit_service 'nexus' do
