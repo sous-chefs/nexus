@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'nexus::default' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
-  nexus_home = '/opt/nexus'
+  nexus_home = '/usr/local/nexus'
 
   it 'creates nexus group' do
     expect(chef_run).to create_group('nexus').with(:system => true)

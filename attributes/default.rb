@@ -18,4 +18,4 @@
 
 default[:nexus][:user] = 'nexus'
 default[:nexus][:group] = 'nexus'
-default[:nexus][:home] = '/opt/nexus'
+default[:nexus][:home] = '/usr/local/nexus'
