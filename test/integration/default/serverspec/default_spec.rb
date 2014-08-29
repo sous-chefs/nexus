@@ -19,3 +19,14 @@
 require 'serverspec'
 include Serverspec::Helper::Exec
 include Serverspec::Helper::DetectOS
+
+describe "Nexus" do
+  describe service('nexus') do
+    it { should be_running }
+  end
+
+  it "is listening on port 8080" do
+    expect(port(8080)).to be_listening
+  end
+
+end
