@@ -19,6 +19,7 @@
 site "http://community.opscode.com/api/v1"
 
 cookbook 'nexus', :path => '.'
+cookbook 'nexus_test', :path => 'test/cookbooks/nexus_test'
 cookbook 'runit', :git => 'git://github.com/hw-cookbooks/runit.git'
 cookbook 'apt'
 cookbook 'yum'

@@ -34,9 +34,16 @@ PATH
       java (>= 0.0.0)
       runit (>= 0.0.0)
 
+PATH
+  remote: test/cookbooks/nexus_test
+  specs:
+    nexus_test (0.1.0)
+      nexus (>= 0.0.0)
+
 DEPENDENCIES
   apt (>= 0)
   nexus (>= 0)
+  nexus_test (>= 0)
   runit (>= 0)
   yum (>= 0)
 

@@ -16,4 +16,4 @@ platforms:
 suites:
 - name: default
   run_list:
-  - recipe[nexus]
+  - recipe[nexus_test]
