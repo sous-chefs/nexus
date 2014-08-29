@@ -76,17 +76,6 @@ template ::File.join(node[:nexus][:home], 'conf', 'jetty.xml') do
   variables(:loopback => true)
 end
 
-template ::File.join(node[:nexus][:home], 'bin', 'nexus') do
-  source 'nexus.erb'
-  owner node[:nexus][:user]
-  group node[:nexus][:group]
-  mode 0775
-  variables(
-    :nexus_user => node[:nexus][:user],
-    :nexus_pid => ::File.join(node[:nexus][:home], 'pid')
-  )
-end
-
 runit_service 'nexus' do
   action :enable
   default_logger true
