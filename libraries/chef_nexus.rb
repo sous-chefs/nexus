@@ -50,10 +50,10 @@ class Chef
       # @param  config [Hash] a configuration hash for the connection
       #
       # @return [NilClass]
-      def ensure_nexus_available(config)
+      def ensure_service_available(config)
         Chef::Application.fatal!(
           'Could not connect to Nexus. Please ensure Nexus is running.'
-        ) unless Chef::Nexus.nexus_available?(config)
+        ) unless Chef::Nexus.service_available?(config)
       end
 
       # Attempts to connect to the Nexus and retries if a connection
@@ -62,9 +62,9 @@ class Chef
       # @param  config [Hash] a configuration hash for the connection
       #
       # @return [Boolean] true if a connection could be made, false otherwise
-      def nexus_available?(config)
-        retries = config[:retries] || 5
-        retry_delay = config[:retry_delay] || 5
+      def service_available?(config)
+        retries = config[:retries] || 10
+        retry_delay = config[:retry_delay] || 10
         begin
           remote = anonymous_nexus_remote(config)
           return remote.status['state'] == 'STARTED'

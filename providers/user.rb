@@ -12,7 +12,7 @@ def load_current_resource
   @current_resource = Chef::Resource::NexusUser.new(new_resource.username)
 
   run_context.include_recipe 'nexus::cli'
-  Chef::Nexus.ensure_nexus_available(@config)
+  Chef::Nexus.ensure_service_available(@config)
 
   @current_resource
 end

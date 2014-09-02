@@ -32,7 +32,7 @@ def load_current_resource
   @current_resource = Chef::Resource::NexusHostedRepository.new(new_resource.name)
 
   run_context.include_recipe 'nexus::cli'
-  Chef::Nexus.ensure_nexus_available(@config)
+  Chef::Nexus.ensure_service_available(@config)
 
   @parsed_id = Chef::Nexus.parse_identifier(new_resource.name)
 
