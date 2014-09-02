@@ -28,7 +28,7 @@ class Chef
       # will be authenticated with the info inside the credentials data bag
       # item.
       #
-      # @param  node [Chef::Node] the node
+      # @param  config [Hash] a configuration hash for the connection
       #
       # @return [NexusCli::RemoteFactory] a connection to a Nexus server
 
@@ -47,7 +47,7 @@ class Chef
       # it is unavailable, the Chef run is failed. Otherwise
       # the Chef run continues.
       #
-      # @param  node [Chef::Node] the Chef node
+      # @param  config [Hash] a configuration hash for the connection
       #
       # @return [NilClass]
       def ensure_nexus_available(config)
@@ -59,7 +59,7 @@ class Chef
       # Attempts to connect to the Nexus and retries if a connection
       # cannot be made.
       #
-      # @param  node [Chef::Node] the node
+      # @param  config [Hash] a configuration hash for the connection
       #
       # @return [Boolean] true if a connection could be made, false otherwise
       def nexus_available?(config)
@@ -86,7 +86,7 @@ class Chef
       #
       # @param  username [String] the Nexus username
       # @param  password [String] the Nexus password
-      # @param  node [Chef::Node] the Chef node
+      # @param  config [Hash] a configuration hash for the connection
       #
       # @return [Boolean] true if a connection can be made, false otherwise
       def check_old_credentials(username, password, node)
@@ -132,7 +132,7 @@ class Chef
       # Creates a new instance of a Nexus connection using only
       # the URL to the local server. This connection is anonymous.
       #
-      # @param  node [Chef::Node] the Chef node
+      # @param  config [Hash] a configuration hash for the connection
       #
       # @return [NexusCli::BaseRemote] a NexusCli remote class
       def anonymous_nexus_remote(config)
