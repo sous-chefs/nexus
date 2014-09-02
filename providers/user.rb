@@ -49,7 +49,7 @@ end
 
 def create_user
   validate_create_user
-  Chef::Nexus.nexus(@config).create_user(get_params)
+  Chef::Nexus.nexus(@config).create_user(params)
 end
 
 def delete_user
@@ -57,16 +57,43 @@ def delete_user
 end
 
 def update_user
-  Chef::Nexus.nexus(@config).update_user(get_params(true))
+  Chef::Nexus.nexus(@config).update_user(params(true))
+end
+
+def change_password
+  validate_change_password
+  Chef::Nexus.nexus(@config).change_password(password_params)
 end
 
 def validate_create_user
-  Chef::Application.fatal!('nexus_user create requires an email address.', 1) if new_resource.email.nil?
-  Chef::Application.fatal!('nexus_user create requires a enabled.', 1) if new_resource.enabled.nil?
-  Chef::Application.fatal!('nexus_user create requires at least one role.', 1) if new_resource.roles.nil? || new_resource.roles.empty?
+  Chef::Application.fatal!(
+    'nexus_user create requires an email address.'
+  ) if new_resource.email.nil?
+
+  Chef::Application.fatal!(
+    'nexus_user create requires a enabled.'
+  ) if new_resource.enabled.nil?
+
+  Chef::Application.fatal!(
+    'nexus_user create requires at least one role.'
+  ) if new_resource.roles.nil? || new_resource.roles.empty?
 end
 
-def get_params(update = false)
+def validate_change_password
+  Chef::Application.fatal!(
+    'nexus_user change_password requires your old password'
+  ) if new_resource.old_password.nil?
+
+  Chef::Application.fatal!(
+    'nexus_user change_password requires a new password'
+  ) if new_resource.password.nil?
+end
+
+def old_credentials_equals?(username, password)
+  Chef::Nexus.check_old_credentials(username, password, @config)
+end
+
+def params(update = false)
   params = { :userId => new_resource.username }
   params[:firstName] = new_resource.first_name
   params[:lastName] = new_resource.last_name
@@ -78,5 +105,12 @@ def get_params(update = false)
   end
   params[:password] = new_resource.password
   params[:roles] = new_resource.roles
+  params
+end
+
+def password_params
+  params = { :userId => new_resource.username }
+  params[:oldPassword] = new_resource.old_password
+  params[:newPassword] = new_resource.password
   params
 end
