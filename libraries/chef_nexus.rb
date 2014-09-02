@@ -81,33 +81,6 @@ class Chef
         end
       end
 
-      # Checks the Nexus users credentials and returns false if they
-      # have been changed.
-      #
-      # @param  username [String] the Nexus username
-      # @param  password [String] the Nexus password
-      # @param  config [Hash] a configuration hash for the connection
-      #
-      # @return [Boolean] true if a connection can be made, false otherwise
-      def check_old_credentials(username, password, node)
-        require 'nexus_cli'
-        url = generate_nexus_url(node)
-        overrides = {
-          'url' => url,
-          'repository' => node[:nexus][:cli][:repository],
-          'username' => username,
-          'password' => password
-        }
-        begin
-          NexusCli::RemoteFactory.create(
-            overrides, node[:nexus][:cli][:ssl][:verify]
-          )
-          true
-        rescue NexusCli::PermissionsException, NexusCli::CouldNotConnectToNexusException, NexusCli::UnexpectedStatusCodeException
-          false
-        end
-      end
-
       # Returns a 'safe-for-Nexus' identifier by replacing
       # spaces with underscores and downcasing the entire
       # String.

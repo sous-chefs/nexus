@@ -60,11 +60,6 @@ def update_user
   Chef::Nexus.nexus(@config).update_user(params(true))
 end
 
-def change_password
-  validate_change_password
-  Chef::Nexus.nexus(@config).change_password(password_params)
-end
-
 def validate_create_user
   Chef::Application.fatal!(
     'nexus_user create requires an email address.'
@@ -77,20 +72,6 @@ def validate_create_user
   Chef::Application.fatal!(
     'nexus_user create requires at least one role.'
   ) if new_resource.roles.nil? || new_resource.roles.empty?
-end
-
-def validate_change_password
-  Chef::Application.fatal!(
-    'nexus_user change_password requires your old password'
-  ) if new_resource.old_password.nil?
-
-  Chef::Application.fatal!(
-    'nexus_user change_password requires a new password'
-  ) if new_resource.password.nil?
-end
-
-def old_credentials_equals?(username, password)
-  Chef::Nexus.check_old_credentials(username, password, @config)
 end
 
 def params(update = false)
