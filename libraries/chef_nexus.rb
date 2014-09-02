@@ -43,34 +43,6 @@ class Chef
         NexusCli::RemoteFactory.create(connection_config, config[:ssl_verify])
       end
 
-      # def nexus(node)
-      #   require 'nexus_cli'
-      #   credentials_entry = get_credentials(node)
-      #   default_credentials = credentials_entry['default_admin']
-      #   updated_credentials = credentials_entry['updated_admin']
-
-      #   url = generate_nexus_url(node)
-
-      #   overrides = { 'url' => url, 'repository' => node[:nexus][:cli][:repository] }
-      #   if Chef::Config[:solo]
-      #     begin
-      #       merged_credentials = overrides.merge(default_credentials)
-      #       NexusCli::RemoteFactory.create(merged_credentials, node[:nexus][:cli][:ssl][:verify])
-      #     rescue NexusCli::PermissionsException, NexusCli::CouldNotConnectToNexusException, NexusCli::UnexpectedStatusCodeException
-      #       merged_credentials = overrides.merge(updated_credentials)
-      #       NexusCli::RemoteFactory.create(merged_credentials, node[:nexus][:cli][:ssl][:verify])
-      #     end
-      #   else
-      #     if node[:nexus][:cli][:default_admin_credentials_updated]
-      #       credentials = credentials_entry['updated_admin']
-      #     else
-      #       credentials = credentials_entry['default_admin']
-      #     end
-      #     merged_credentials = overrides.merge(credentials)
-      #     NexusCli::RemoteFactory.create(merged_credentials, node[:nexus][:cli][:ssl][:verify])
-      #   end
-      # end
-
       # Checks to ensure the Nexus server is available. When
       # it is unavailable, the Chef run is failed. Otherwise
       # the Chef run continues.
