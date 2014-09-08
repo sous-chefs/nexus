@@ -17,7 +17,7 @@ class Chef
           nexus_url += "&e=#{args[:extension]}" if args[:extension]
           url = URI.join(args[:server], nexus_url)
           url.userinfo = "#{args[:username]}:#{args[:password]}" if args[:username]
-          Chef::Log.info("NexusArtifactURL generated #{url.to_s}")
+          Chef::Log.info("Chef::Nexus::Artifact.get_url generated #{url}")
           full_url_after_redirect(url)
         end
 
@@ -27,8 +27,9 @@ class Chef
           result = Net::HTTP.start(uri.hostname, uri.port) do |connection|
             connection.request(req)
           end
-          Chef::Log.info("get_url result: #{result.inspect}")
-          Chef::Log.info("result headers: #{result.header.inspect}")
+          Chef::Log.debug("get_url result: #{result.inspect}")
+          Chef::Log.debug("result headers: #{result.header.inspect}")
+          Chef::Log.debug("result body: #{result.body.inspect}")
           n_uri = URI.parse(result.header['location'])
           n_uri.userinfo = uri.userinfo
           n_uri.to_s

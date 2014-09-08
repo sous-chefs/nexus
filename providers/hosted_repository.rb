@@ -19,17 +19,8 @@
 #
 
 def load_current_resource
-  @config = {
-    :url => 'http://localhost:8080/nexus',
-    :ssl_verify => true,
-    :retries => 5,
-    :retry_delay => 5,
-    :repository => 'releases',
-    :username => 'admin',
-    :password => 'admin123'
-  }
-
   @current_resource = Chef::Resource::NexusHostedRepository.new(new_resource.name)
+  @config = Chef::Nexus.merge_config(new_resource.config, node)
 
   run_context.include_recipe 'nexus::cli'
   Chef::Nexus.ensure_service_available(@config)

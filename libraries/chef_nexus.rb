@@ -28,7 +28,7 @@ class Chef
       # will be authenticated with the info inside the credentials data bag
       # item.
       #
-      # @param  config [Hash] a configuration hash for the connection
+      # @param config [Hash] a configuration hash for the connection
       #
       # @return [NexusCli::RemoteFactory] a connection to a Nexus server
 
@@ -41,6 +41,41 @@ class Chef
           'password' => config[:password]
         }
         NexusCli::RemoteFactory.create(connection_config, config[:ssl_verify])
+      end
+
+      # Generates the URL for a nexus instance
+      # @param override_config [Hash]
+      # @param node [Chef::Node]
+      #
+      # @return [String]
+
+      def default_url(override_config = {}, node)
+        require 'uri'
+        url = {
+          :scheme => 'http',
+          :host => 'localhost',
+          :port => node[:nexus][:port],
+          :path => node[:nexus][:context_path]
+        }
+        url.merge!(override_config)
+        URI::Generic.build(url).to_s
+      end
+
+      # Merges provided configuration with defaults, returning the config
+      # as a Mash.
+      # @param override_config a hash of default configuration overrides
+      #
+      # @return [Mash] hash of configuration values for the nexus connection
+      def merge_config(override_config = {}, node)
+        default_config = Mash.new(
+          :url => default_url(override_config, node),
+          :username => 'admin',
+          :password => 'admin123',
+          :retries => 10,
+          :retry_delay => 10
+        )
+
+        default_config.merge(override_config)
       end
 
       # Checks to ensure the Nexus server is available. When
@@ -63,8 +98,8 @@ class Chef
       #
       # @return [Boolean] true if a connection could be made, false otherwise
       def service_available?(config)
-        retries = config[:retries] || 10
-        retry_delay = config[:retry_delay] || 10
+        retries = config[:retries]
+        retry_delay = config[:retry_delay]
         begin
           remote = anonymous_nexus_remote(config)
           return remote.status['state'] == 'STARTED'

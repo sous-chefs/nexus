@@ -84,3 +84,10 @@ runit_service 'nexus' do
   )
   action [:enable, :start]
 end
+
+ruby_block 'wait until nexus ready' do
+  block do
+    config = Chef::Nexus.merge_config({}, node)
+    Chef::Nexus.ensure_service_available(config)
+  end
+end
