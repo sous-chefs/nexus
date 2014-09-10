@@ -1,3 +1,4 @@
+require 'net/https'
 require 'uri'
 
 class Chef
@@ -22,11 +23,14 @@ class Chef
         end
 
         def full_url_after_redirect(uri)
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true if uri.scheme == 'https'
+
           req = Net::HTTP::Get.new(uri.request_uri)
           req.basic_auth(*uri.userinfo.split(':'))
-          result = Net::HTTP.start(uri.hostname, uri.port) do |connection|
-            connection.request(req)
-          end
+
+          result = http.request(req)
+
           Chef::Log.debug("get_url result: #{result.inspect}")
           Chef::Log.debug("result headers: #{result.header.inspect}")
           Chef::Log.debug("result body: #{result.body.inspect}")
