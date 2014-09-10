@@ -37,12 +37,12 @@ class Chef
 
         def nexus_check_required_args!(args)
           [:server, :repository, :group_id, :artifact_id, :version].each do |key|
-            unless args[key]
-              Chef::Application.fatal!(
-                "Nexus URL Error: Required argument is missing or unset: #{key}"
-              )
-            end
+            next if args[key]
+            Chef::Application.fatal!(
+              "Nexus URL Error: Required argument is missing or unset: #{key}"
+            )
           end
+
           unless args.include?(:extension) || args.include?(:package_type)
             Chef::Application.fatal!(
               'Nexus URL Error: you must specify either an extension or package type'
