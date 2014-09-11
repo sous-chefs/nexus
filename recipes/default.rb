@@ -65,7 +65,7 @@ template ::File.join(node[:nexus][:home], 'conf', 'nexus.properties') do
     :nexus_port => node[:nexus][:port],
     :nexus_host => '0.0.0.0',
     :nexus_context_path => node[:nexus][:context_path],
-    :work_dir => ::File.join(node[:nexus][:home], 'work')
+    :work_dir => node[:nexus][:work_dir]
   )
 end
 

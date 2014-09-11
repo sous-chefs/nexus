@@ -22,5 +22,6 @@ default[:nexus][:home] = '/usr/local/nexus'
 default[:nexus][:port] = 8080
 default[:nexus][:context_path] = '/nexus'
 default[:nexus][:loopback_only] = false
+default[:nexus][:work_dir] = '/usr/local/nexus/work'
 
 default[:java][:jdk_version] = 7
