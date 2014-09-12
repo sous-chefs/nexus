@@ -20,17 +20,7 @@ include_recipe 'ark'
 include_recipe 'java'
 include_recipe 'runit'
 include_recipe 'nexus::cli'
-
-group node[:nexus][:group] do
-  system true
-end
-
-user node[:nexus][:user] do
-  gid node[:nexus][:group]
-  shell '/bin/bash'
-  home node[:nexus][:home]
-  system true
-end
+include_recipe 'nexus::manage_user'
 
 ark 'nexus' do
   url 'http://www.sonatype.org/downloads/nexus-2.9.0-bundle.tar.gz'
