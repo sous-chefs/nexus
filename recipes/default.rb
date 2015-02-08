@@ -23,11 +23,11 @@ include_recipe 'nexus::cli'
 include_recipe 'nexus::manage_user'
 
 ark 'nexus' do
-  url 'http://www.sonatype.org/downloads/nexus-2.9.0-bundle.tar.gz'
-  version '2.9.0-04'
+  url node[:nexus][:download_url] % { :version => node[:nexus][:version] }
+  version node[:nexus][:version]
   path node[:nexus][:home]
   strip_components 1
-  checksum '0025c478a9ad4b3e0c8a31ebebe0001873a41a7716113a3802eef55ce516e19a'
+  checksum node[:nexus][:download_sha256_checksum]
   owner node[:nexus][:user]
   action :install
 end
