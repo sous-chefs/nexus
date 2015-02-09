@@ -21,7 +21,7 @@ version '1.0.0'
 
 maintainer 'Heavy Water Operations LLC'
 maintainer_email 'support@hw-ops.com'
-license 'Proprietary - All Rights Reserved'
+license 'Apache 2.0'
 description 'installs and configures sonatype nexus'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 

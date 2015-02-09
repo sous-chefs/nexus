@@ -15,10 +15,8 @@ guard 'foodcritic', :cookbook_paths => '.', :cli => '-C -t ~FC001' do
   watch(%r{resources/.+\.rb$})
 end
 
-rspec_opts = '--color --format progress'
-
-guard 'rspec', :cmd => "bundle exec rspec #{rspec_opts}", :all_on_start => true do
-  watch(%r{^spec/.+_spec\.rb$})
-  watch('spec/spec_helper.rb')  { 'spec' }
-  watch(%r{^(libraries|providers|recipes|resources)/(.+)\.rb$}) { |m| "spec/#{m[2]}_spec.rb"  }
+guard 'rspec', :cmd => 'bundle exec rspec', :spec_paths => ['test/unit'], :all_on_start => true do
+  watch(%r{^test/unit/.+_spec\.rb$})
+  watch('test/unit/spec_helper.rb')  { 'test/unit' }
+  watch(%r{^(libraries|providers|recipes|resources)/(.+)\.rb$}) { |m| "test/unit/#{m[2]}_spec.rb"  }
 end
