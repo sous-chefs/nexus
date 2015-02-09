@@ -17,7 +17,7 @@
 #
 
 name 'nexus'
-version '1.0.0'
+version '1.0.1'
 
 maintainer 'Heavy Water Operations LLC'
 maintainer_email 'support@hw-ops.com'
