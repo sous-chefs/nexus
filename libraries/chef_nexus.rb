@@ -110,7 +110,7 @@ class Chef
             sleep retry_delay
             retry
           end
-          return false
+          false
         end
       end
 

@@ -69,7 +69,7 @@ def repository_exists?(name)
   Chef::Nexus.nexus(@config).get_repository_info(name)
   true
 rescue NexusCli::RepositoryNotFoundException
-  return false
+  false
 end
 
 def set_publisher

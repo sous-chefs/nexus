@@ -34,7 +34,7 @@ def user_exists?(username)
   Chef::Nexus.nexus(@config).get_user(username)
   true
 rescue NexusCli::UserNotFoundException
-  return false
+  false
 end
 
 def create_user

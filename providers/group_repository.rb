@@ -74,7 +74,7 @@ def group_repository_exists?(name)
   Chef::Nexus.nexus(@config).get_group_repository(name)
   true
 rescue NexusCli::RepositoryNotFoundException
-  return false
+  false
 end
 
 def repository_in_group?(repository_name, repository_to_check)
