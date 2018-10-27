@@ -14,15 +14,15 @@ describe 'nexus::default' do
   end
 
   it 'creates nexus group' do
-    expect(chef_run).to create_group('nexus').with(:system => true)
+    expect(chef_run).to create_group('nexus').with(system: true)
   end
 
   it 'creates nexus user' do
     expect(chef_run).to create_user('nexus').with(
-      :system => true,
-      :gid => 'nexus',
-      :shell => '/bin/bash',
-      :home => nexus_home
+      system: true,
+      gid: 'nexus',
+      shell: '/bin/bash',
+      home: nexus_home
     )
   end
 
@@ -34,17 +34,17 @@ describe 'nexus::default' do
 
   it 'creates nexus.properties' do
     expect(chef_run).to create_template(::File.join(nexus_home, 'conf', 'nexus.properties')).with(
-      :user => 'nexus',
-      :group => 'nexus',
-      :mode => 0775
+      user: 'nexus',
+      group: 'nexus',
+      mode: 0775
     )
   end
 
   it 'creates jetty.xml' do
     expect(chef_run).to create_template(::File.join(nexus_home, 'conf', 'jetty.xml')).with(
-      :user => 'nexus',
-      :group => 'nexus',
-      :mode => 0775
+      user: 'nexus',
+      group: 'nexus',
+      mode: 0775
     )
   end
 
@@ -56,5 +56,4 @@ describe 'nexus::default' do
     expect(chef_run).to enable_runit_service('nexus')
     expect(chef_run).to start_runit_service('nexus')
   end
-
 end

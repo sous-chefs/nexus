@@ -5,7 +5,6 @@ class Chef
   module Nexus
     module Artifact
       class << self
-
         def get_url(args = {})
           args = nexus_default_args.merge(args)
           nexus_check_required_args!(args)
@@ -46,18 +45,14 @@ class Chef
               "Nexus URL Error: Required argument is missing or unset: #{key}"
             )
           end
-
-          unless args.include?(:extension) || args.include?(:package_type)
-            Chef::Application.fatal!(
-              'Nexus URL Error: you must specify either an extension or package type'
-            )
-          end
+          Chef::Application.fatal!(
+            'Nexus URL Error: you must specify either an extension or package type'
+          ) unless args.include?(:extension) || args.include?(:package_type)
         end
 
         def nexus_default_args
           Mash.new
         end
-
       end
     end
   end

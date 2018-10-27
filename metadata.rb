@@ -16,15 +16,21 @@
 # limitations under the License.
 #
 
-name 'nexus'
-version '1.0.0'
-
-maintainer 'Heavy Water Operations LLC'
-maintainer_email 'support@hw-ops.com'
-license 'Apache 2.0'
-description 'installs and configures sonatype nexus'
+name              'nexus'
+version           '1.0.0'
+maintainer        'Sous Chefs'
+maintainer_email  'help@sous-chefs.org'
+license           'Apache-2.0'
+description       'Installs and configures sonatype nexus'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+source_url        'https://github.com/sous-chefs/nexus'
+issues_url        'https://github.com/sous-chefs/nexus/issues'
+chef_version      '>= 13.0'
 
 depends 'ark'
 depends 'java'
 depends 'runit'
+
+%w(ubuntu redhat centos).each do |os|
+  supports os
+end

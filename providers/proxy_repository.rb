@@ -20,7 +20,7 @@
 
 def load_current_resource
   @current_resource = Chef::Resource::NexusProxyRepository.new(new_resource.name)
-  @config = Chef::Nexus.merge_config(new_resource.config, node)
+  @config = Chef::Nexus.merge_config(node, new_resource.config)
 
   run_context.include_recipe 'nexus::cli'
   Chef::Nexus.ensure_service_available(@config)

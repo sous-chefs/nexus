@@ -21,9 +21,7 @@
 #
 class Chef
   module Nexus
-
     class << self
-
       # Creates and returns an instance of a NexusCli::RemoteFactory that
       # will be authenticated with the info inside the credentials data bag
       # item.
@@ -35,10 +33,10 @@ class Chef
       def nexus(config)
         require 'nexus_cli'
         connection_config = {
-          'url' => config[:url],
-          'repository' => config[:repository],
-          'username' => config[:username],
-          'password' => config[:password]
+          'url' => config['url'],
+          'repository' => config['repository'],
+          'username' => config['username'],
+          'password' => config['password'],
         }
         NexusCli::RemoteFactory.create(connection_config, config[:ssl_verify])
       end
@@ -49,13 +47,13 @@ class Chef
       #
       # @return [String]
 
-      def default_url(override_config = {}, node)
+      def default_url(node, override_config = {})
         require 'uri'
         url = {
-          :scheme => 'http',
-          :host => 'localhost',
-          :port => node[:nexus][:port],
-          :path => node[:nexus][:context_path]
+          scheme: 'http',
+          host: 'localhost',
+          port: node['nexus']['port'],
+          path: node['nexus']['context_path'],
         }
         url.merge!(override_config)
         URI::Generic.build(url).to_s
@@ -66,13 +64,13 @@ class Chef
       # @param override_config a hash of default configuration overrides
       #
       # @return [Mash] hash of configuration values for the nexus connection
-      def merge_config(override_config = {}, node)
+      def merge_config(node, override_config = {})
         default_config = Mash.new(
-          :url => default_url(override_config, node),
-          :username => 'admin',
-          :password => 'admin123',
-          :retries => 10,
-          :retry_delay => 10
+          url: default_url(node, override_config),
+          username: 'admin',
+          password: 'admin123',
+          retries: 10,
+          retry_delay: 10
         )
 
         default_config.merge(override_config)
@@ -127,7 +125,7 @@ class Chef
       #
       # @return [String] a safe-for-Nexus version of the identifier
       def parse_identifier(nexus_identifier)
-        nexus_identifier.gsub(' ', '_').downcase
+        nexus_identifier.tr(' ', '_').downcase
       end
 
       def decode(value)
@@ -151,7 +149,6 @@ class Chef
           config[:ssl_verify]
         )
       end
-
     end
   end
 end

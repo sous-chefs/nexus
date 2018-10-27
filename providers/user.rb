@@ -1,6 +1,6 @@
 def load_current_resource
   @current_resource = Chef::Resource::NexusUser.new(new_resource.username)
-  @config = Chef::Nexus.merge_config(new_resource.config, node)
+  @config = Chef::Nexus.merge_config(node, new_resource.config)
 
   run_context.include_recipe 'nexus::cli'
   Chef::Nexus.ensure_service_available(@config)
@@ -65,23 +65,23 @@ def validate_create_user
 end
 
 def params(update = false)
-  params = { :userId => new_resource.username }
+  params = { userId: new_resource.username }
   params[:firstName] = new_resource.first_name
   params[:lastName] = new_resource.last_name
   params[:email] = new_resource.email
-  if new_resource.enabled.nil? && update
-    params[:status] = nil
-  else
-    params[:status] = new_resource.enabled == true ? 'active' : 'disabled'
-  end
+  params[:status] = if new_resource.enabled.nil? && update
+                      nil
+                    else
+                      new_resource.enabled == true ? 'active' : 'disabled'
+                    end
   params[:password] = new_resource.password
   params[:roles] = new_resource.roles
   params
 end
 
 def password_params
-  params = { :userId => new_resource.username }
-  params[:oldPassword] = new_resource.old_password
-  params[:newPassword] = new_resource.password
+  params = { userId: new_resource.username }
+  params['oldPassword'] = new_resource.old_password
+  params['newPassword'] = new_resource.password
   params
 end
