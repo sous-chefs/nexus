@@ -21,9 +21,7 @@
 #
 class Chef
   module Nexus
-
     class << self
-
       # Creates and returns an instance of a NexusCli::RemoteFactory that
       # will be authenticated with the info inside the credentials data bag
       # item.
@@ -35,12 +33,12 @@ class Chef
       def nexus(config)
         require 'nexus_cli'
         connection_config = {
-          'url' => config[:url],
-          'repository' => config[:repository],
-          'username' => config[:username],
-          'password' => config[:password]
+          'url' => config['url'],
+          'repository' => config['repository'],
+          'username' => config['username'],
+          'password' => config['password'],
         }
-        NexusCli::RemoteFactory.create(connection_config, config[:ssl_verify])
+        NexusCli::RemoteFactory.create(connection_config, config['ssl_verify'])
       end
 
       # Generates the URL for a nexus instance
@@ -49,13 +47,13 @@ class Chef
       #
       # @return [String]
 
-      def default_url(override_config = {}, node)
+      def default_url(node, override_config = {})
         require 'uri'
         url = {
-          :scheme => 'http',
-          :host => 'localhost',
-          :port => node[:nexus][:port],
-          :path => node[:nexus][:context_path]
+          scheme: 'http',
+          host: 'localhost',
+          port: node['nexus']['port'],
+          path: node['nexus']['context_path'],
         }
         url.merge!(override_config)
         URI::Generic.build(url).to_s
@@ -66,13 +64,13 @@ class Chef
       # @param override_config a hash of default configuration overrides
       #
       # @return [Mash] hash of configuration values for the nexus connection
-      def merge_config(override_config = {}, node)
+      def merge_config(node, override_config = {})
         default_config = Mash.new(
-          :url => default_url(override_config, node),
-          :username => 'admin',
-          :password => 'admin123',
-          :retries => 10,
-          :retry_delay => 10
+          url: default_url(node, override_config),
+          username: 'admin',
+          password: 'admin123',
+          retries: 10,
+          retry_delay: 10
         )
 
         default_config.merge(override_config)
@@ -98,8 +96,8 @@ class Chef
       #
       # @return [Boolean] true if a connection could be made, false otherwise
       def service_available?(config)
-        retries = config[:retries]
-        retry_delay = config[:retry_delay]
+        retries = config['retries']
+        retry_delay = config['retry_delay']
         begin
           remote = anonymous_nexus_remote(config)
           return remote.status['state'] == 'STARTED'
@@ -127,7 +125,7 @@ class Chef
       #
       # @return [String] a safe-for-Nexus version of the identifier
       def parse_identifier(nexus_identifier)
-        nexus_identifier.gsub(' ', '_').downcase
+        nexus_identifier.tr(' ', '_').downcase
       end
 
       def decode(value)
@@ -147,11 +145,10 @@ class Chef
         require 'nexus_cli'
 
         NexusCli::RemoteFactory.create(
-          { 'url' => config[:url] },
-          config[:ssl_verify]
+          { 'url' => config['url'] },
+          config['ssl_verify']
         )
       end
-
     end
   end
 end

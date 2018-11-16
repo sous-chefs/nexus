@@ -1,7 +1,6 @@
 #
 # Author:: Heavy Water Operations LLC <support@hw-ops.com>
 #
-# Copyright 2014, Heavy Water Operations LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,18 +15,18 @@
 # limitations under the License.
 #
 
-default[:nexus][:user] = 'nexus'
-default[:nexus][:group] = 'nexus'
-default[:nexus][:home] = '/usr/local/nexus'
-default[:nexus][:port] = 8080
-default[:nexus][:context_path] = '/nexus'
-default[:nexus][:loopback_only] = false
-default[:nexus][:work_dir] = '/usr/local/nexus/work'
+default['nexus']['user'] = 'nexus'
+default['nexus']['group'] = 'nexus'
+default['nexus']['home'] = '/usr/local/nexus'
+default['nexus']['port'] = 8080
+default['nexus']['context_path'] = '/nexus'
+default['nexus']['loopback_only'] = false
+default['nexus']['work_dir'] = '/usr/local/nexus/work'
 
-default[:nexus][:version] = '2.9.0'
-default[:nexus][:download_url] =
+default['nexus']['version'] = '2.9.0'
+default['nexus']['download_url'] =
   'http://download.sonatype.com/nexus/oss/nexus-%{version}-bundle.tar.gz'
-default[:nexus][:download_sha256_checksum] =
+default['nexus']['download_sha256_checksum'] =
   'd1beec847697096cc87c19721d3200f0db57b3279fe9452dacc0dbd37a4a4f27'
 
-default[:java][:jdk_version] = 7
+default['java']['jdk_version'] = 7

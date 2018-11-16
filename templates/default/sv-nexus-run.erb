@@ -1,4 +1,4 @@
 #!/bin/sh
 exec 2>&1
-exec chpst -u <%= @options[:nexus_user] %> /usr/local/nexus/bin/jsw/linux-x86-64/wrapper \
+exec chpst -u <%= @options['nexus_user] %> /usr/local/nexus/bin/jsw/linux-x86-64/wrapper \
     /usr/local/nexus/bin/jsw/conf/wrapper.conf wrapper.syslog.ident=nexus
