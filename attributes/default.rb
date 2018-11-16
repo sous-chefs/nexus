@@ -23,10 +23,10 @@ default['nexus']['context_path'] = '/nexus'
 default['nexus']['loopback_only'] = false
 default['nexus']['work_dir'] = '/usr/local/nexus/work'
 
-default['nexus']['version'] = '2.9.0'
+default['nexus']['version'] = '3.14.0-04'
 default['nexus']['download_url'] =
-  'http://download.sonatype.com/nexus/oss/nexus-%{version}-bundle.tar.gz'
+  'https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-%{version}-unix.tar.gz'
 default['nexus']['download_sha256_checksum'] =
-  'd1beec847697096cc87c19721d3200f0db57b3279fe9452dacc0dbd37a4a4f27'
+  'ae8cc7891942d71cf12c11e1a98d70c1310e788ab44aa95c5d1e7671cc0187e2'
 
 default['java']['jdk_version'] = 7
