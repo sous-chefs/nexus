@@ -20,7 +20,7 @@
 
 def load_current_resource
   @current_resource = Chef::Resource::NexusHostedRepository.new(new_resource.name)
-  @config = Chef::Nexus.merge_config(new_resource.config, node)
+  @config = Chef::Nexus.merge_config(node, new_resource.config)
 
   run_context.include_recipe 'nexus::cli'
   Chef::Nexus.ensure_service_available(@config)
@@ -69,7 +69,7 @@ def repository_exists?(name)
   Chef::Nexus.nexus(@config).get_repository_info(name)
   true
 rescue NexusCli::RepositoryNotFoundException
-  return false
+  false
 end
 
 def set_publisher

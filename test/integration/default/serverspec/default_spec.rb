@@ -1,7 +1,6 @@
 #
 # Author:: Heavy Water Operations LLC <support@hw-ops.com>
 #
-# Copyright 2014, Heavy Water Operations LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,12 +34,11 @@ describe 'Nexus' do
   it 'is listening on port 8080' do
     expect(port(8080)).to be_listening
   end
-
 end
 
 describe file('/usr/local/nexus/conf/nexus.properties') do
-  its(:content) { should match %r{application-port=8080} }
-  its(:content) { should match %r{application-host=0.0.0.0} }
+  its(:content) { should match /application-port=8080/ }
+  its(:content) { should match /application-host=0.0.0.0/ }
   its(:content) { should match %r{nexus-work=/usr/local/nexus/work} }
   its(:content) { should match %r{nexus-webapp-context-path=/nexus} }
 end

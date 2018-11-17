@@ -20,7 +20,7 @@
 
 def load_current_resource
   @current_resource = Chef::Resource::NexusGroupRepository.new(new_resource.name)
-  @config = Chef::Nexus.merge_config(new_resource.config, node)
+  @config = Chef::Nexus.merge_config(node, new_resource.config)
 
   run_context.include_recipe 'nexus::cli'
   Chef::Nexus.ensure_service_available(@config)
@@ -74,7 +74,7 @@ def group_repository_exists?(name)
   Chef::Nexus.nexus(@config).get_group_repository(name)
   true
 rescue NexusCli::RepositoryNotFoundException
-  return false
+  false
 end
 
 def repository_in_group?(repository_name, repository_to_check)

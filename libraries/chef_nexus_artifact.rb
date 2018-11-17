@@ -5,19 +5,18 @@ class Chef
   module Nexus
     module Artifact
       class << self
-
         def get_url(args = {})
           args = nexus_default_args.merge(args)
           nexus_check_required_args!(args)
           nexus_url = '/nexus/service/local/artifact/maven/redirect?'
-          nexus_url += "r=#{args[:repository]}"
-          nexus_url += "&g=#{args[:group_id]}"
-          nexus_url += "&a=#{args[:artifact_id]}"
-          nexus_url += "&v=#{args[:version]}"
-          nexus_url += "&c=#{args[:package_type]}" if args[:package_type]
-          nexus_url += "&e=#{args[:extension]}" if args[:extension]
-          url = URI.join(args[:server], nexus_url)
-          url.userinfo = "#{args[:username]}:#{args[:password]}" if args[:username]
+          nexus_url += "r=#{args['repository']}"
+          nexus_url += "&g=#{args['group_id']}"
+          nexus_url += "&a=#{args['artifact_id']}"
+          nexus_url += "&v=#{args['version']}"
+          nexus_url += "&c=#{args['package_type']}" if args['package_type']
+          nexus_url += "&e=#{args['extension']}" if args['extension']
+          url = URI.join(args['server'], nexus_url)
+          url.userinfo = "#{args['username']}:#{args['password']}" if args['username']
           Chef::Log.info("Chef::Nexus::Artifact.get_url generated #{url}")
           full_url_after_redirect(url)
         end
@@ -40,7 +39,7 @@ class Chef
         end
 
         def nexus_check_required_args!(args)
-          [:server, :repository, :group_id, :artifact_id, :version].each do |key|
+          %i(server repository group_id artifact_id version).each do |key|
             next if args[key]
             Chef::Application.fatal!(
               "Nexus URL Error: Required argument is missing or unset: #{key}"
@@ -57,7 +56,6 @@ class Chef
         def nexus_default_args
           Mash.new
         end
-
       end
     end
   end
