@@ -17,10 +17,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+property :repository, String
 
-actions :create, :delete, :add_to, :remove_from
-default_action :create
+def load_current_resource
+  @current_resource = Chef::Resource::NexusGroupRepository.new(new_resource.name)
+  @config = Chef::Nexus.merge_config(node, new_resource.config)
 
-attribute :name, kind_of: String, name_attribute: true
-attribute :repository, kind_of: String
-attribute :config, kind_of: Hash, default: {}
+  run_context.include_recipe 'nexus::cli'
+  Chef::Nexus.ensure_service_available(@config)
+
+  @parsed_id = Chef::Nexus.parse_identifier(new_resource.name)
+
+  unless new_resource.repository.nil?
+    @parsed_repository = Chef::Nexus.parse_identifier(new_resource.repository)
+  end
+
+  @current_resource.repository @parsed_repository
+
+  @current_resource
+end
+
+action :create do
+  unless group_repository_exists?(new_resource.name, new_resource.config)
+    converge_by "Create Nexus group repository #{new_resource.name}" do
+      Chef::Nexus.nexus(@config).create_group_repository(new_resource.name, nil, nil)
+    end
+  end
+end
+
+action :delete do
+  if group_repository_exists?(new_resource.name, new_resource.config)
+    converge_by "Delete Nexus group repository #{new_resource.name}" do
+      Chef::Nexus.nexus(node).delete_group_repository(@parsed_id)
+    end
+  end
+end
+
+action :add_to do
+  unless repository_in_group?(@current_resource.name, @current_resource.repository)
+    converge_by "Adding to Nexus group repository #{new_resource.name}" do
+      Chef::Nexus.nexus(@config).add_to_group_repository(@parsed_id, @parsed_repository)
+    end
+  end
+end
+
+action :remove_from do
+  if repository_in_group?(@current_resource.name, @current_resource.repository)
+    converge_by "Removing from Nexus group repository #{new_resource.name}" do
+      Chef::Nexus.nexus(@config).remove_from_group_repository(@parsed_id, @parsed_repository)
+    end
+  end
+end
+
+action_class do
+end

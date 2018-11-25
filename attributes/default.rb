@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 default['nexus']['user'] = 'nexus'
 default['nexus']['group'] = 'nexus'
 default['nexus']['home'] = '/usr/local/nexus'
@@ -22,11 +21,10 @@ default['nexus']['port'] = 8080
 default['nexus']['context_path'] = '/nexus'
 default['nexus']['loopback_only'] = false
 default['nexus']['work_dir'] = '/usr/local/nexus/work'
-
 default['nexus']['version'] = '3.14.0-04'
 default['nexus']['download_url'] =
   'https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-%{version}-unix.tar.gz'
 default['nexus']['download_sha256_checksum'] =
   'ae8cc7891942d71cf12c11e1a98d70c1310e788ab44aa95c5d1e7671cc0187e2'
 
-default['java']['jdk_version'] = 7
+default['java']['jdk_version'] = 11

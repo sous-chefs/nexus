@@ -11,7 +11,6 @@ issues_url        'https://github.com/sous-chefs/nexus/issues'
 
 depends 'ark'
 depends 'java'
-depends 'runit'
 
 supports 'debian'
 supports 'ubuntu'
