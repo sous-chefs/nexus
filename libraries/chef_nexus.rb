@@ -1,10 +1,10 @@
 #
-# Cookbook Name:: nexus
+# Cookbook:: nexus
 # Library:: chef_nexus
 #
 # Author:: Kyle Allan (<kallan@riotgames.com>)
 # Author:: Heavy Water Operations LLC (<support@hw-ops.com>)
-# Copyright 2013, Riot Games
+# Copyright:: 2013, Riot Games
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

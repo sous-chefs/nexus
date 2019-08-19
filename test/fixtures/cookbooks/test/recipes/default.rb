@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nexus_test
+# Cookbook:: nexus_test
 # Recipe:: default
 #
 
