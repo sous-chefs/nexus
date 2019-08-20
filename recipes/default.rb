@@ -50,7 +50,7 @@ template ::File.join(node['nexus']['home'], 'conf', 'nexus.properties') do
   source 'nexus.properties.erb'
   owner node['nexus']['user']
   group node['nexus']['group']
-  mode 0775
+  mode '775'
   variables(
     nexus_port: node['nexus']['port'],
     nexus_host: '0.0.0.0',
@@ -63,7 +63,7 @@ template ::File.join(node['nexus']['home'], 'conf', 'jetty.xml') do
   source 'jetty.xml.erb'
   owner node['nexus']['user']
   group node['nexus']['group']
-  mode 0775
+  mode '775'
   variables(loopback: node['nexus']['loopback_only'])
 end
 
