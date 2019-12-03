@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-actions :create, :update, :delete
 default_action :create
 
 attribute :username, kind_of: String, name_attribute: true
