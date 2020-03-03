@@ -100,7 +100,7 @@ class Chef
         retry_delay = config['retry_delay']
         begin
           remote = anonymous_nexus_remote(config)
-          return remote.status['state'] == 'STARTED'
+          remote.status['state'] == 'STARTED'
         rescue Errno::ECONNREFUSED, NexusCli::CouldNotConnectToNexusException, \
                NexusCli::UnexpectedStatusCodeException => e
           if retries > 0
@@ -110,7 +110,7 @@ class Chef
             sleep retry_delay
             retry
           end
-          return false
+          false
         end
       end
 
