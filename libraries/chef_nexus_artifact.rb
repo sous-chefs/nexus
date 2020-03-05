@@ -61,4 +61,4 @@ class Chef
   end
 end
 
-Chef::Recipe.send(:include, Chef::Nexus::Artifact)
+Chef::Recipe.include Chef::Nexus::Artifact
