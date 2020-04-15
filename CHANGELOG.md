@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- resolved cookstyle error: libraries/chef_nexus.rb:87:9 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: libraries/chef_nexus_artifact.rb:44:13 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: libraries/chef_nexus_artifact.rb:50:13 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: providers/user.rb:54:3 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: providers/user.rb:58:3 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: providers/user.rb:62:3 refactor: `ChefCorrectness/ChefApplicationFatal`
+
 ## 4.0.1
 
 - Remove unnecessary actions method in the resources

@@ -84,9 +84,7 @@ class Chef
       #
       # @return [NilClass]
       def ensure_service_available(config)
-        Chef::Application.fatal!(
-          'Could not connect to Nexus. Please ensure Nexus is running.'
-        ) unless Chef::Nexus.service_available?(config)
+        raise('Could not connect to Nexus. Please ensure Nexus is running.') unless Chef::Nexus.service_available?(config)
       end
 
       # Attempts to connect to the Nexus and retries if a connection

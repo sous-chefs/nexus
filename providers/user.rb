@@ -51,17 +51,11 @@ def update_user
 end
 
 def validate_create_user
-  Chef::Application.fatal!(
-    'nexus_user create requires an email address.'
-  ) if new_resource.email.nil?
+  raise('nexus_user create requires an email address.') if new_resource.email.nil?
 
-  Chef::Application.fatal!(
-    'nexus_user create requires a enabled.'
-  ) if new_resource.enabled.nil?
+  raise('nexus_user create requires a enabled.') if new_resource.enabled.nil?
 
-  Chef::Application.fatal!(
-    'nexus_user create requires at least one role.'
-  ) if new_resource.roles.nil? || new_resource.roles.empty?
+  raise('nexus_user create requires at least one role.') if new_resource.roles.nil? || new_resource.roles.empty?
 end
 
 def params(update = false)
