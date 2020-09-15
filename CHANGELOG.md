@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- resolved cookstyle error: libraries/chef_nexus_artifact.rb:60:1 refactor: `ChefCorrectness/IncorrectLibraryInjection`
+
 ## 4.0.2 (2020-05-05)
 
 - resolved cookstyle error: libraries/chef_nexus.rb:87:9 refactor: `ChefCorrectness/ChefApplicationFatal`

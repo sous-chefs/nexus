@@ -57,4 +57,4 @@ class Chef
   end
 end
 
-Chef::Recipe.include Chef::Nexus::Artifact
+Chef::DSL::Recipe.include Chef::Nexus::Artifact
