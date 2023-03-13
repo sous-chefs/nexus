@@ -1,9 +1,5 @@
-#
-# Cookbook:: nexus_test
-# Recipe:: default
-#
 
-include_recipe 'nexus'
+nexus_install 'nexus'
 
 nexus_user 'testuser' do
   email 'user@example.com'

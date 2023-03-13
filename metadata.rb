@@ -1,6 +1,6 @@
 name              'nexus'
 version           '4.0.6'
-chef_version      '>= 13.0'
+chef_version      '>= 15.3'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'
 license           'Apache-2.0'

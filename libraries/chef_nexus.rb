@@ -64,17 +64,17 @@ class Chef
       # @param override_config a hash of default configuration overrides
       #
       # @return [Mash] hash of configuration values for the nexus connection
-      def merge_config(node, override_config = {})
-        default_config = Mash.new(
-          url: default_url(node, override_config),
-          username: 'admin',
-          password: 'admin123',
-          retries: 10,
-          retry_delay: 10
-        )
+      # def merge_config(node, override_config = {})
+      #   default_config = Mash.new(
+      #     url: default_url(node, override_config),
+      #     username: 'admin',
+      #     password: 'admin123',
+      #     retries: 10,
+      #     retry_delay: 10
+      #   )
 
-        default_config.merge(override_config)
-      end
+      #   default_config.merge(override_config)
+      # end
 
       # Checks to ensure the Nexus server is available. When
       # it is unavailable, the Chef run is failed. Otherwise
