@@ -28,8 +28,6 @@ action :delete do
   end
 end
 
-private
-
 def user_exists?(username)
   Chef::Nexus.nexus(@config).get_user(username)
   true
