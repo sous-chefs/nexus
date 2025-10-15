@@ -68,8 +68,6 @@ action :remove_from do
   end
 end
 
-private
-
 def group_repository_exists?(name)
   Chef::Nexus.nexus(@config).get_group_repository(name)
   true

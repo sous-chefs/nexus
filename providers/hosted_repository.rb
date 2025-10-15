@@ -63,8 +63,6 @@ action :update do
   end
 end
 
-private
-
 def repository_exists?(name)
   Chef::Nexus.nexus(@config).get_repository_info(name)
   true
