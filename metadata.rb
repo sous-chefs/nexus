@@ -1,5 +1,5 @@
 name              'nexus'
-version           '4.0.11'
+version           '4.0.12'
 chef_version      '>= 13.0'
 maintainer        'Sous Chefs'
 maintainer_email  'help@sous-chefs.org'

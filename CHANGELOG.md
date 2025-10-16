@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.12](https://github.com/sous-chefs/nexus/compare/v4.0.11...v4.0.12) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#62](https://github.com/sous-chefs/nexus/issues/62)) ([0d4ad17](https://github.com/sous-chefs/nexus/commit/0d4ad173986d948ce1c3f4d5b0dd3973ef81d729))
+
 ## [4.0.11](https://github.com/sous-chefs/nexus/compare/4.0.10...v4.0.11) (2025-10-15)
 
 
