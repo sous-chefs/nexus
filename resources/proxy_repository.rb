@@ -1,27 +1,97 @@
-#
-# Cookbook:: nexus
-# Resource:: proxy_repository
-#
-# Author:: Kyle Allan (<kallan@riotgames.com>)
-# Copyright:: 2013, Riot Games
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-default_action :create
+# frozen_string_literal: true
 
-attribute :url, kind_of: String, required: true
-attribute :policy, kind_of: String, default: nil
-attribute :publisher, kind_of: [TrueClass, FalseClass], default: nil
-attribute :subscriber, kind_of: [TrueClass, FalseClass], default: nil
-attribute :preemptive_fetch, kind_of: [TrueClass, FalseClass], default: false
-attribute :config, kind_of: Hash, default: {}
+provides :nexus_proxy_repository
+unified_mode true
+use '_partial/_api'
+use '_partial/_repository'
+
+property :url, String,
+         required: true,
+         description: 'Remote repository URL.'
+
+property :subscriber, [true, false, nil],
+         default: nil,
+         description: 'Whether artifact subscription is enabled for the repository.'
+
+property :preemptive_fetch, [true, false],
+         default: false,
+         description: 'Whether preemptive fetching is enabled for artifact subscription.'
+
+action :create do
+  install_nexus_cli
+  config = nexus_config(new_resource.config)
+  ensure_nexus_service_available(config)
+
+  unless repository_exists?(config, new_resource.name)
+    converge_by "create Nexus proxy repository #{new_resource.name}" do
+      nexus_client(config).create_repository(new_resource.name, true, new_resource.url, nil, new_resource.policy, nil)
+    end
+  end
+
+  update_publisher(config) unless new_resource.publisher.nil?
+  update_subscriber(config) unless new_resource.subscriber.nil?
+end
+
+action :update do
+  install_nexus_cli
+  config = nexus_config(new_resource.config)
+  ensure_nexus_service_available(config)
+
+  next unless repository_exists?(config, new_resource.name)
+
+  update_publisher(config) unless new_resource.publisher.nil?
+  update_subscriber(config) unless new_resource.subscriber.nil?
+end
+
+action :delete do
+  install_nexus_cli
+  config = nexus_config(new_resource.config)
+  ensure_nexus_service_available(config)
+
+  next unless repository_exists?(config, new_resource.name)
+
+  converge_by "delete Nexus proxy repository #{new_resource.name}" do
+    nexus_client(config).delete_repository(nexus_identifier(new_resource.name))
+  end
+end
+
+action_class do
+  include NexusCookbook::Helpers
+
+  def install_nexus_cli
+    chef_gem 'nexus_cli' do
+      version '4.1.0'
+    end
+  end
+
+  def repository_exists?(config, name)
+    nexus_client(config).get_repository_info(name)
+    true
+  rescue NexusCli::RepositoryNotFoundException
+    false
+  end
+
+  def update_publisher(config)
+    parsed_id = nexus_identifier(new_resource.name)
+
+    converge_by "#{new_resource.publisher ? 'enable' : 'disable'} artifact publishing for #{new_resource.name}" do
+      if new_resource.publisher
+        nexus_client(config).enable_artifact_publish(parsed_id)
+      else
+        nexus_client(config).disable_artifact_publish(parsed_id)
+      end
+    end
+  end
+
+  def update_subscriber(config)
+    parsed_id = nexus_identifier(new_resource.name)
+
+    converge_by "#{new_resource.subscriber ? 'enable' : 'disable'} artifact subscription for #{new_resource.name}" do
+      if new_resource.subscriber
+        nexus_client(config).enable_artifact_subscribe(parsed_id, new_resource.preemptive_fetch)
+      else
+        nexus_client(config).disable_artifact_subscribe(parsed_id, new_resource.preemptive_fetch)
+      end
+    end
+  end
+end
