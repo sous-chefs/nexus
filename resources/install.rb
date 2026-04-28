@@ -71,6 +71,8 @@ action :create do
     system true
   end
 
+  package 'tar'
+
   ark 'nexus' do
     url format(new_resource.download_url, version: new_resource.version)
     version new_resource.version

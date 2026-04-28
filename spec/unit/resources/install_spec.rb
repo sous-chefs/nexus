@@ -21,6 +21,10 @@ describe 'nexus_install' do
     )
   end
 
+  it 'installs tar for archive extraction' do
+    expect(chef_run).to install_package('tar')
+  end
+
   it 'installs nexus with ark' do
     expect(chef_run).to install_ark('nexus')
   end
