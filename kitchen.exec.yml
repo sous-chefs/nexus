@@ -1,7 +1,25 @@
 ---
-driver: { name: exec }
-transport: { name: exec }
+driver:
+  name: exec
+
+transport:
+  name: exec
+
+provisioner:
+  name: chef_infra
+  chef_omnibus_install: false
+  sudo: true
+
+verifier:
+  name: inspec
 
 platforms:
-  - name: macos-latest
-  - name: windows-latest
+  - name: ubuntu-latest
+
+suites:
+  - name: default
+    run_list:
+      - recipe[test::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
