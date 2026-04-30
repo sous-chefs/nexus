@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.0.0](https://github.com/sous-chefs/nexus/compare/v4.0.12...v5.0.0) (2026-04-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate nexus to custom resources ([#68](https://github.com/sous-chefs/nexus/issues/68))
+
+### Features
+
+* migrate nexus to custom resources ([#68](https://github.com/sous-chefs/nexus/issues/68)) ([e405473](https://github.com/sous-chefs/nexus/commit/e405473911b34e9614c31ca12c65a777fbb9d231))
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#62](https://github.com/sous-chefs/nexus/issues/62)) ([0d4ad17](https://github.com/sous-chefs/nexus/commit/0d4ad173986d948ce1c3f4d5b0dd3973ef81d729))
+
 ## [4.0.12](https://github.com/sous-chefs/nexus/compare/v4.0.11...v4.0.12) (2025-10-16)
 
 
