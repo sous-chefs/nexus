@@ -9,6 +9,7 @@ provisioner:
   name: chef_infra
   chef_omnibus_install: false
   sudo: true
+  policyfile: Policyfile.rb
 
 verifier:
   name: inspec
@@ -18,8 +19,8 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-      - recipe[test::default]
+    provisioner:
+      named_run_list: default
     verifier:
       inspec_tests:
         - test/integration/default

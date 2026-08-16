@@ -76,7 +76,8 @@ action :create do
   ark 'nexus' do
     url format(new_resource.download_url, version: new_resource.version)
     version new_resource.version
-    path new_resource.home
+    path "#{new_resource.home}-#{new_resource.version}"
+    home_dir new_resource.home
     strip_components 1
     checksum new_resource.download_sha256_checksum
     owner new_resource.user
@@ -173,6 +174,11 @@ action :delete do
   end
 
   directory new_resource.home do
+    recursive true
+    action :delete
+  end
+
+  directory "#{new_resource.home}-#{new_resource.version}" do
     recursive true
     action :delete
   end
