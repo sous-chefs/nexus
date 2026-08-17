@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/sous-chefs/nexus/compare/v5.0.0...v5.0.1) (2026-08-17)
+
+
+### Bug Fixes
+
+* migrate Nexus tests to Policyfile ([#77](https://github.com/sous-chefs/nexus/issues/77)) ([0e93299](https://github.com/sous-chefs/nexus/commit/0e93299f0a2355a6455fdd6b81080f3a7e3e4c9a))
+
 ## [5.0.0](https://github.com/sous-chefs/nexus/compare/v4.0.12...v5.0.0) (2026-04-29)
 
 
