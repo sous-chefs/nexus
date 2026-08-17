@@ -26,7 +26,10 @@ describe 'nexus_install' do
   end
 
   it 'installs nexus with ark' do
-    expect(chef_run).to install_ark('nexus')
+    expect(chef_run).to install_ark('nexus').with(
+      path: '/usr/local/nexus-3.91.1-04',
+      home_dir: '/usr/local/nexus'
+    )
   end
 
   it 'renders nexus.properties' do

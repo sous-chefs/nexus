@@ -10,6 +10,7 @@ transport:
 provisioner:
   name: dokken
   deprecations_as_errors: true
+  policyfile: Policyfile.rb
 
 verifier:
   name: inspec
@@ -58,8 +59,8 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-      - recipe[test::default]
+    provisioner:
+      named_run_list: default
     verifier:
       inspec_tests:
         - test/integration/default

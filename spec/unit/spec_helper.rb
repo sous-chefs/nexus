@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift(File.expand_path('../support', __dir__))
 
 require 'chefspec'
-require 'chefspec/berkshelf'
+require 'chefspec/policyfile'
 require 'nexus_cli'
 
 def stub_nexus_cli(client)
